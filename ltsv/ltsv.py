@@ -2,11 +2,11 @@
 
 def writer(obj, lineterminator="\n", encoding="utf-8"):
     if isinstance(obj, dict):
-        return self.dump(obj, encoding)
+        return dump(obj, encoding)
     elif isinstance(obj, list):
         out = []
         for line in obj:
-            out.append(self.dump(line, encoding))
+            out.append(dump(line, encoding))
         return lineterminator.join(out)
     else:
         raise ValueError("not support")
