@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+
 def writer(obj, lineterminator="\n", encoding="utf-8"):
     if isinstance(obj, dict):
         return dump(obj, encoding)
@@ -11,7 +12,11 @@ def writer(obj, lineterminator="\n", encoding="utf-8"):
     else:
         raise ValueError("not support")
 
-def dump(dic, encoding):
+
+def dump(dic, encoding=None):
     ltsv = u"\t".join(unicode(k) + u":" + ("" if v is None else unicode(v))
                      for k, v in dic.iteritems())
-    return ltsv.encode(encoding)
+    if encoding is None:
+        return ltsv
+    else:
+        return ltsv.encode(encoding)

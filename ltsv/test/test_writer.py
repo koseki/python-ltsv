@@ -43,3 +43,20 @@ def test_writer_int():
 def test_writer_none():
     result = writer({'a': None, 'b': None})
     assert "a:\tb:" == result or "b:\ta:" == result
+
+
+def test_writer_unicode():
+    result = writer({u'あ': u'い', u'う': u'え'})
+    assert isinstance(result, unicode)
+    assert u"あ:い\tう:え" == result or u"う:え\tあ:い" == result
+
+
+def test_writer_8bit_to_unicode():
+    result = writer({'a': 'b', 'c': 'd'})
+    assert isinstance(result, unicode)
+
+
+def test_writer_encoding():
+    result = writer({u'あ': u'い'}, encoding='utf-8')
+    assert isinstance(result, str)
+    assert "\xe3\x81\x82:\xe3\x81\x84" == result
