@@ -12,6 +12,6 @@ def writer(obj, lineterminator="\n", encoding="utf-8"):
         raise ValueError("not support")
 
 def dump(dic, encoding):
-    ltsv = u"\t".join(k + u":" + v for k, v in dic.iteritems())
+    ltsv = u"\t".join(unicode(k) + u":" + ("" if v is None else unicode(v))
+                     for k, v in dic.iteritems())
     return ltsv.encode(encoding)
-

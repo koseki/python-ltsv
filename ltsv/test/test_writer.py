@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from ltsv import writer
 from collections import OrderedDict
 
@@ -29,3 +31,15 @@ def test_writer_list():
     result = writer([odict, {'eee': '123'}])
     expect = "bcd:efg\tabc:def\neee:123"
     assert expect == result
+
+
+def test_writer_int():
+    result = writer({'bbb': 111, 'aaa': 222, 3: 444})
+    result = sorted(result.split("\t"))
+    expect = ['3:444', 'aaa:222', 'bbb:111']
+    assert expect == result
+
+
+def test_writer_none():
+    result = writer({'a': None, 'b': None})
+    assert "a:\tb:" == result or "b:\ta:" == result
