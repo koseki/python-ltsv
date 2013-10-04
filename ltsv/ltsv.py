@@ -21,6 +21,20 @@ def dump(dic, encoding=None):
             v = ""
         elif not isinstance(v, unicode):
             v = str(v)
+
+            # Replace special character to space.
+            # This is not LTSV normative but 'fail-safe' treatment.
+            # User can escape values by own way before passing this method,
+            # if required. For example:
+            #
+            #   value = value.replace("\\", "\\\\")
+            #   value = value.replace("\t", "\\t")
+            #   value = value.replace("\r", "\\r")
+            #   value = value.replace("\n", "\\n")
+            #
+            v = v.replace("\t", " ")
+            v = v.replace("\r\n", " ").replace("\r", " ").replace("\n", " ")
+
         values.append(k + ":" + v)
 
     ltsv = "\t".join(values)

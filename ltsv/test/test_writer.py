@@ -75,3 +75,9 @@ def test_encoding_str():
     result = writer({'a': 'b'}, encoding='utf-8')
     assert isinstance(result, str)
     assert "a:b" == result
+
+
+def test_replace_special_characters():
+    result = dump({"a": "b\r\nc\rd\n\re\t\\f"})
+    assert isinstance(result, str)
+    assert "a:b c d  e \\f" == result
