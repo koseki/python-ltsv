@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+import sys
+
 
 def writer(obj, lineterminator="\n", encoding="utf-8"):
     if isinstance(obj, dict):
@@ -15,11 +17,12 @@ def writer(obj, lineterminator="\n", encoding="utf-8"):
 
 def dump(dic, encoding=None):
     values = []
-    for k, v in dic.iteritems():
-        k = k if isinstance(k, unicode) else str(k)
+    unicode_type = unicode if sys.version < '3' else str
+    for k, v in dic.items():
+        k = k if isinstance(k, unicode_type) else str(k)
         if v is None:
             v = ""
-        elif not isinstance(v, unicode):
+        elif not isinstance(v, unicode_type):
             v = str(v)
 
             # Replace special character to space.
