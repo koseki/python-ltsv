@@ -14,8 +14,16 @@ def writer(obj, lineterminator="\n", encoding="utf-8"):
 
 
 def dump(dic, encoding=None):
-    ltsv = u"\t".join(unicode(k) + u":" + ("" if v is None else unicode(v))
-                     for k, v in dic.iteritems())
+    values = []
+    for k, v in dic.iteritems():
+        k = k if isinstance(k, unicode) else str(k)
+        if v is None:
+            v = ""
+        elif not isinstance(v, unicode):
+            v = str(v)
+        values.append(k + ":" + v)
+
+    ltsv = "\t".join(values)
     if encoding is None:
         return ltsv
     else:

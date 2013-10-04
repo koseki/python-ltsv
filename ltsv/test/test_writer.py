@@ -55,12 +55,23 @@ def test_unicode_key_and_value():
     assert u"あ:い\tう:え" == result or u"う:え\tあ:い" == result
 
 
-def test_string_to_unicode():
+def test_not_unicode():
     result = dump({'a': 'b', 'c': 'd'})
+    assert isinstance(result, str)
+
+
+def test_join_str_and_unicode():
+    result = dump({'a': 'b', u'あ': 123})
     assert isinstance(result, unicode)
 
 
-def test_encoding():
+def test_encoding_unicode():
     result = writer({u'あ': u'い'}, encoding='utf-8')
     assert isinstance(result, str)
     assert "\xe3\x81\x82:\xe3\x81\x84" == result
+
+
+def test_encoding_str():
+    result = writer({'a': 'b'}, encoding='utf-8')
+    assert isinstance(result, str)
+    assert "a:b" == result
